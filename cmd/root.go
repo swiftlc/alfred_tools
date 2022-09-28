@@ -10,8 +10,7 @@ import (
 )
 
 var (
-	cfgFile     string
-	userLicense string
+	cfgFile string
 
 	rootCmd = &cobra.Command{
 		Use:   "alfred_tools",
@@ -43,6 +42,7 @@ func init() {
 
 	rootCmd.AddCommand(timeCmd)
 	rootCmd.AddCommand(vscodeOpenCmd)
+	rootCmd.AddCommand(weeklyCmd)
 
 	wf = aw.New()
 }

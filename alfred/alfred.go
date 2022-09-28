@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path"
+	"strings"
 	"time"
 )
 
@@ -15,6 +16,10 @@ const (
 
 func FormateTime(sec int64) string {
 	return time.Unix(sec, 0).In(CstTimezone).Format(DefaultTimeFmt)
+}
+
+func FormateTimeDate(sec int64) string {
+	return strings.Split(FormateTime(sec), " ")[0]
 }
 
 func WalkDir(filePath string, level int, handler func(p string)) {
@@ -50,4 +55,14 @@ func PathExists(path string) (bool, error) {
 		return false, nil
 	}
 	return false, err
+}
+
+func AppendToFile(file, str string) error {
+	f, err := os.OpenFile(file, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0660)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	_, err = f.WriteString("\n" + str)
+	return err
 }
